@@ -3,10 +3,15 @@
 
 # load some libraries
 library(tidyverse)
+library(lubridate)
+library(jsonlite)
 library(shiny)
 
 # load the data
 fpts_raw <- read.csv("https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/odds_fpts.csv")
+# get freshness
+fpts_commit <- fromJSON("https://api.github.com/repos/jimtheflash/gambling_stuff/commits?path=data/02_curated/nba_first_to_score/odds_fpts.csv", flatten = TRUE)
+last_fpts_update <- max(as_datetime(fpts_commit$commit.committer.date))
 
 # terribly slow way to identify edges
 edges <- list()
@@ -37,10 +42,11 @@ fpts_tidy <- fpts_raw %>%
     Edges
   )
 
-
 # ui ----------------------------------------------------------------------
 
 ui <- fluidPage(
+  h1('First Player To Score Dash'),
+  h3(paste0('Last updated at: ', last_fpts_update)),
   dataTableOutput('fpts_table')
 )
 
