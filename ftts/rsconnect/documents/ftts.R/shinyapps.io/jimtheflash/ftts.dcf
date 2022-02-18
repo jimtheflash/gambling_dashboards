@@ -1,0 +1,13 @@
+name: ftts
+title: ftts
+username:
+account: jimtheflash
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5676484
+bundleId: 5590348
+url: https://jimtheflash.shinyapps.io/ftts/
+when: 1645115462.18066
+lastSyncTime: 1645115462.18067
+asMultiple: FALSE
+asStatic: FALSE

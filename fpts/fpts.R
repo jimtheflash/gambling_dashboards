@@ -7,11 +7,20 @@ library(lubridate)
 library(jsonlite)
 library(shiny)
 library(DT)
+library(reactable)
+
+# make some helpers
+add_plus <- function(x) {
+  if (is.na(x)) ''
+  else if (x > 0) paste0('+', round(x))
+  else if (x <= 0) as.character(round(x))
+  else x
+}
 
 # ui ----------------------------------------------------------------------
 
 ui <- fluidPage(
-  h1('First Player To Score Dash'),
+  h1('First Player To Score'),
   br(),
   fluidRow(
     column(
@@ -24,14 +33,14 @@ ui <- fluidPage(
       width = 10,
       h4(textOutput('fpts_last_update')))),
   br(),
-  fluidRow(dataTableOutput('fpts_table'))
+  fluidRow(reactableOutput('fpts_table'))
 )
 
 # server ------------------------------------------------------------------
 
 server <- function(input, output, session) {
   
-  # TODO is this restart.txt business still necessary
+  # restart
   if (file.exists('restart.txt')) system('touch restart.txt') else file.create('restart.txt')
   
   # when the update button is pushed grab the latest odds_fpts.csv from github
@@ -85,7 +94,6 @@ server <- function(input, output, session) {
       ) %>%
       arrange(desc(`Max Edge`))
   })
-  
   # when the update button is clicked, hit github api to find out datetime of latest commit for odds_fpts
   fpts_last_update <- eventReactive(input$updateButton, {
     max(as_datetime(fpts_raw()$run_timestamp_utc))
@@ -94,21 +102,48 @@ server <- function(input, output, session) {
   output$fpts_last_update <- renderText(
     paste0('FPTS Data Last Updated at ', fpts_last_update(), ' UTC')
     )
-  
-  # make the table of odds
-  output$fpts_table <- renderDT(
-    datatable(fpts_tidy(),
-              rownames = FALSE,
-              options = list(
-                dom = 't',
-                paging = FALSE
-              )) %>%
-      formatPercentage(columns = c('Max Edge'),
-                       digits = 2) %>%
-      formatCurrency(columns = c('Expected', 'BR', 'DK', 'FD', 'PB'),
-                     currency = "+",
-                     interval = 999,
-                     digits = 0))
+  output$fpts_table <- renderReactable({
+    
+    shiny::validate(need(nrow(fpts_tidy()) > 0, "waiting for input..."))
+    
+    reactable(
+      fpts_tidy(),
+      rownames = FALSE,
+      filterable = TRUE,
+      sortable = TRUE,
+      defaultSorted = list(`Max Edge` = 'desc'),
+      columns = list(
+        Player = colDef(name = 'Player'),
+        Team = colDef(name = 'Team'),
+        Game = colDef(name = 'Game'),
+        Date = colDef(name = 'Date'),
+        `Max Edge` = colDef(name = 'Max Edge', format = colFormat(percent = TRUE)),
+        Expected = colDef(cell = function(value) {add_plus(value)}),
+        BR = colDef(cell = function(value) {add_plus(value)}),
+        DK = colDef(cell = function(value) {add_plus(value)}),
+        FD = colDef(cell = function(value) {add_plus(value)}),
+        PB = colDef(cell = function(value) {add_plus(value)})
+      ),
+      columnGroups = list(colGroup(
+        name = "Odds",
+        columns = c("BR", "DK", "FD", "PB")
+      )))
+  })
+  # # make the table of odds
+  # output$fpts_table <- renderDT(
+  #   datatable(fpts_tidy(),
+  #             rownames = FALSE,
+  #             filter = list(
+  #               position = 'top', clear = FALSE
+  #             ),
+  #             options = list(
+  #               dom = 't',
+  #               paging = FALSE
+  #             )) %>%
+  #     formatPercentage(columns = c('Max Edge'),
+  #                      digits = 2) %>%
+  #     formatStyle(columns = c('Expected', 'BR', 'DK', 'FD', 'PB'),
+  #                    digits = 0))
 }
 
 # app ---------------------------------------------------------------------
