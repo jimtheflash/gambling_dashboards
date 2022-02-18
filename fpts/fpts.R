@@ -6,7 +6,6 @@ library(tidyverse)
 library(lubridate)
 library(jsonlite)
 library(shiny)
-library(DT)
 library(reactable)
 
 # make some helpers
@@ -129,21 +128,6 @@ server <- function(input, output, session) {
         columns = c("BR", "DK", "FD", "PB")
       )))
   })
-  # # make the table of odds
-  # output$fpts_table <- renderDT(
-  #   datatable(fpts_tidy(),
-  #             rownames = FALSE,
-  #             filter = list(
-  #               position = 'top', clear = FALSE
-  #             ),
-  #             options = list(
-  #               dom = 't',
-  #               paging = FALSE
-  #             )) %>%
-  #     formatPercentage(columns = c('Max Edge'),
-  #                      digits = 2) %>%
-  #     formatStyle(columns = c('Expected', 'BR', 'DK', 'FD', 'PB'),
-  #                    digits = 0))
 }
 
 # app ---------------------------------------------------------------------

@@ -6,7 +6,15 @@ library(tidyverse)
 library(lubridate)
 library(jsonlite)
 library(shiny)
-library(DT)
+library(reactable)
+
+# make some helpers
+add_plus <- function(x) {
+  if (is.na(x)) ''
+  else if (x > 0) paste0('+', round(x))
+  else if (x <= 0) as.character(round(x))
+  else x
+}
 
 # ui ----------------------------------------------------------------------
 
@@ -24,14 +32,13 @@ ui <- fluidPage(
       width = 10,
       h4(textOutput('ftts_last_update')))),
   br(),
-  fluidRow(dataTableOutput('ftts_table'))
+  fluidRow(reactableOutput('ftts_table'))
 )
 
 # server ------------------------------------------------------------------
 
 server <- function(input, output, session) {
   
-  # TODO is this restart.txt business still necessary
   if (file.exists('restart.txt')) system('touch restart.txt') else file.create('restart.txt')
   
   # when the update button is pushed grab the latest odds_fpts.csv from github
@@ -80,8 +87,8 @@ server <- function(input, output, session) {
         Edges,
         BR = br_line,
         # DK = dk_line,
-        FD = fd_line,
-        PB = pb_line
+        FD = fd_line
+        # PB = pb_line
       ) %>%
       arrange(desc(`Max Edge`))
   })
@@ -96,19 +103,37 @@ server <- function(input, output, session) {
   )
   
   # make the table of odds
-  output$ftts_table <- renderDT(
-    datatable(ftts_tidy(),
-              filter = list(
-                position = 'top', clear = FALSE
-              ),
-              options = list(
-                dom = 't',
-                paging = FALSE
-              )) %>%
-      formatPercentage(columns = c('Max Edge'),
-                       digits = 2) %>%
-      formatStyle(columns = c('Expected', 'BR', 'FD', 'PB'),
-                     digits = 0))
+  output$ftts_table <- renderReactable({
+    
+    shiny::validate(need(nrow(ftts_tidy()) > 0, "waiting for input..."))
+    
+    reactable(
+      ftts_tidy(),
+      rownames = FALSE,
+      filterable = TRUE,
+      sortable = TRUE,
+      defaultSorted = list(`Max Edge` = 'desc'),
+      columns = list(
+        Team = colDef(name = 'Team'),
+        Game = colDef(name = 'Game'),
+        Date = colDef(name = 'Date'),
+        Quarter = colDef(name = 'Quarter'),
+        `Max Edge` = colDef(name = 'Max Edge', format = colFormat(percent = TRUE)),
+        Expected = colDef(cell = function(value) {add_plus(value)}),
+        BR = colDef(cell = function(value) {add_plus(value)}),
+        # DK = colDef(cell = function(value) {add_plus(value)}),
+        FD = colDef(cell = function(value) {add_plus(value)})
+        # PB = colDef(cell = function(value) {add_plus(value)})
+      ),
+      columnGroups = list(colGroup(
+        name = "Odds",
+        columns = c("BR", 
+                    # "DK", 
+                    "FD" 
+                    # "PB"
+                    )
+      )))
+  })
 }
 
 # app ---------------------------------------------------------------------
