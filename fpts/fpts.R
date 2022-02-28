@@ -4,7 +4,6 @@
 # load some libraries
 library(tidyverse)
 library(lubridate)
-library(jsonlite)
 library(shiny)
 library(reactable)
 
@@ -108,6 +107,7 @@ server <- function(input, output, session) {
     reactable(
       fpts_tidy(),
       rownames = FALSE,
+      pagination = FALSE,
       filterable = TRUE,
       sortable = TRUE,
       defaultSorted = list(`Max Edge` = 'desc'),

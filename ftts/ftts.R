@@ -4,9 +4,9 @@
 # load some libraries
 library(tidyverse)
 library(lubridate)
-library(jsonlite)
 library(shiny)
 library(reactable)
+library(reactablefmtr)
 
 # make some helpers
 add_plus <- function(x) {
@@ -86,7 +86,7 @@ server <- function(input, output, session) {
         `Max Edge`,
         Edges,
         BR = br_line,
-        # DK = dk_line,
+        DK = dk_line,
         FD = fd_line
         # PB = pb_line
       ) %>%
@@ -110,6 +110,7 @@ server <- function(input, output, session) {
     reactable(
       ftts_tidy(),
       rownames = FALSE,
+      pagination = FALSE,
       filterable = TRUE,
       sortable = TRUE,
       defaultSorted = list(`Max Edge` = 'desc'),
@@ -121,18 +122,12 @@ server <- function(input, output, session) {
         `Max Edge` = colDef(name = 'Max Edge', format = colFormat(percent = TRUE)),
         Expected = colDef(cell = function(value) {add_plus(value)}),
         BR = colDef(cell = function(value) {add_plus(value)}),
-        # DK = colDef(cell = function(value) {add_plus(value)}),
+        DK = colDef(cell = function(value) {add_plus(value)}),
         FD = colDef(cell = function(value) {add_plus(value)})
-        # PB = colDef(cell = function(value) {add_plus(value)})
       ),
       columnGroups = list(colGroup(
         name = "Odds",
-        columns = c("BR", 
-                    # "DK", 
-                    "FD" 
-                    # "PB"
-                    )
-      )))
+        columns = c("BR", "DK", "FD"))))
   })
 }
 

@@ -39,4 +39,5 @@ vignettes/*.pdf
 .Renviron
 
 # rsconnect stuff
-*/rsconnect/
+fpts/rsconnect/*
+ftts/rsconnect/*
