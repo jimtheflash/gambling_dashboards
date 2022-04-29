@@ -54,9 +54,11 @@ server <- function(input, output, session) {
         filter(row_number() == i) 
       out_vec <- c()
       if (!is.na(test_row$br_edge) & test_row$br_edge > 0) out_vec['br'] <- test_row$br_line
+      if (!is.na(test_row$bs_edge) & test_row$bs_edge > 0) out_vec['bs'] <- test_row$bs_line
       if (!is.na(test_row$dk_edge) & test_row$dk_edge > 0) out_vec['dk'] <- test_row$dk_line
       if (!is.na(test_row$fd_edge) & test_row$fd_edge > 0) out_vec['fd'] <- test_row$fd_line
       if (!is.na(test_row$pb_edge) & test_row$pb_edge > 0) out_vec['pb'] <- test_row$pb_line
+      if (!is.na(test_row$mgm_edge) & test_row$mgm_edge > 0) out_vec['mgm'] <- test_row$mgm_line
       if (all(is.na(out_vec))|is.null(out_vec)) {
         edges[[i]] <- 'none'
         } else {
@@ -86,8 +88,10 @@ server <- function(input, output, session) {
         `Max Edge`,
         Edges,
         BR = br_line,
+        BS = bs_line,
         DK = dk_line,
         FD = fd_line,
+        MGM = mgm_line,
         PB = pb_line
       ) %>%
       arrange(desc(`Max Edge`))
@@ -119,13 +123,15 @@ server <- function(input, output, session) {
         `Max Edge` = colDef(name = 'Max Edge', format = colFormat(percent = TRUE)),
         Expected = colDef(cell = function(value) {add_plus(value)}),
         BR = colDef(cell = function(value) {add_plus(value)}),
+        BS = colDef(cell = function(value) {add_plus(value)}),
         DK = colDef(cell = function(value) {add_plus(value)}),
         FD = colDef(cell = function(value) {add_plus(value)}),
+        MGM = colDef(cell = function(value) {add_plus(value)}),
         PB = colDef(cell = function(value) {add_plus(value)})
       ),
       columnGroups = list(colGroup(
         name = "Odds",
-        columns = c("BR", "DK", "FD", "PB")
+        columns = c("BR", "BS", "DK", "FD", "MGM", "PB")
       )))
   })
 }
