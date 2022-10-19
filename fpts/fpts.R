@@ -55,6 +55,7 @@ server <- function(input, output, session) {
       out_vec <- c()
       if (!is.na(test_row$br_edge) & test_row$br_edge > 0) out_vec['br'] <- test_row$br_line
       if (!is.na(test_row$bs_edge) & test_row$bs_edge > 0) out_vec['bs'] <- test_row$bs_line
+      if (!is.na(test_row$csr_edge) & test_row$csr_edge > 0) out_vec['csr'] <- test_row$csr_line
       if (!is.na(test_row$dk_edge) & test_row$dk_edge > 0) out_vec['dk'] <- test_row$dk_line
       if (!is.na(test_row$fd_edge) & test_row$fd_edge > 0) out_vec['fd'] <- test_row$fd_line
       if (!is.na(test_row$pb_edge) & test_row$pb_edge > 0) out_vec['pb'] <- test_row$pb_line
@@ -89,6 +90,7 @@ server <- function(input, output, session) {
         Edges,
         BR = br_line,
         BS = bs_line,
+        CSR = csr_line,
         DK = dk_line,
         FD = fd_line,
         MGM = mgm_line,
@@ -124,6 +126,7 @@ server <- function(input, output, session) {
         Expected = colDef(cell = function(value) {add_plus(value)}),
         BR = colDef(cell = function(value) {add_plus(value)}),
         BS = colDef(cell = function(value) {add_plus(value)}),
+        CSR = colDef(cell = function(value) {add_plus(value)}),
         DK = colDef(cell = function(value) {add_plus(value)}),
         FD = colDef(cell = function(value) {add_plus(value)}),
         MGM = colDef(cell = function(value) {add_plus(value)}),
@@ -131,7 +134,7 @@ server <- function(input, output, session) {
       ),
       columnGroups = list(colGroup(
         name = "Odds",
-        columns = c("BR", "BS", "DK", "FD", "MGM", "PB")
+        columns = c("BR", "BS", "CSR", "DK", "FD", "MGM", "PB")
       )))
   })
 }
