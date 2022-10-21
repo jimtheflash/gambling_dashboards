@@ -49,20 +49,22 @@ server <- function(input, output, session) {
   fpts_tidy <- reactive({
     # make a string with edges - this is not the right or best or even a good way to do it
     edges <- list()
+    max_edges <- list()
     for (i in 1:nrow(fpts_raw())) {
       test_row <- fpts_raw() %>%
         filter(row_number() == i) %>%
-        mutate_all(~replace(., is.na(.), -Inf))
-        mutate(max_edge = max(c_across(ends_with('edge'))))
+        mutate_all(~replace(., is.na(.), -Inf)) %>%
+        mutate(max_edge_val = max(c_across(ends_with('edge'))))
       edge_out_vec <- c()
       is_max_edge_out_vec <- c()
       edge_cols <- test_row %>% select(ends_with('edge'))
       for (j in 1:ncol(edge_cols)) {
         edge_colname <- colnames(edge_cols)[j]
         book <- unlist(str_split(colnames(edge_cols[j]), '_'))[1]
-        book_edge <- edge_cols[j, edge_colname]
-        if (book_edge > 0) edge_out_vec[book] <- book_edge
-        if (book_edge > 0 & book_edge == test_row$max_edge) is_max_edge_out_vec[book] <- book_edge
+        line_colname <- paste0(book, '_line')
+        book_edge <- edge_cols[1, edge_colname]
+        if (book_edge > 0) edge_out_vec[book] <- test_row[1, line_colname]
+        if (book_edge > 0 & book_edge == test_row$max_edge_val) is_max_edge_out_vec[book] <- test_row[1, line_colname]
       }
       if (all(is.na(edge_out_vec))|is.null(edge_out_vec)) {
         edges[[i]] <- 'none'
@@ -71,13 +73,12 @@ server <- function(input, output, session) {
         out_string <- paste0(names(sorted_edges), ' +', sorted_edges, collapse = ', ')
         edges[[i]] <- out_string
         }
-    }
       if (all(is.na(is_max_edge_out_vec))|is.null(is_max_edge_out_vec)) {
         max_edges[[i]] <- 'none'
       } else {
         sorted_max_edges <- rev(sort(is_max_edge_out_vec[which(!is.na(is_max_edge_out_vec))]))
-        out_string <- paste0(names(sorted_max_edges), ' +', sorted_max_edges, collapse = ', ')
-        max_edges[[i]] <- out_string
+        out_string_max <- paste0(names(sorted_max_edges), ' +', sorted_max_edges, collapse = ', ')
+        max_edges[[i]] <- out_string_max
       }
     }    
     
