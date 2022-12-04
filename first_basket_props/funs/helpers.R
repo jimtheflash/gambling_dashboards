@@ -1,8 +1,13 @@
-add_plus <- function(x) {
-  if (is.na(x)) ''
-  else if (x > 0) paste0('+', round(x))
-  else if (x <= 0) as.character(round(x))
-  else x
+
+add_plus_JS <- function() {
+  JS("function(cellInfo) {
+      if (cellInfo.value > 0) {
+       return '+' + cellInfo.value
+      } else {
+       return cellInfo.value
+      }
+     }"
+  )
 }
 
 restart_app <- function() {
@@ -12,3 +17,5 @@ restart_app <- function() {
     file.create('restart.txt')
   }
 }
+
+

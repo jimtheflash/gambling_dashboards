@@ -39,8 +39,8 @@ make_table <- function(table_data, type = 'player') {
         Date = colDef(align = 'left', width = 105, aggregate = "max"),
         Game = colDef(align = 'left', width = 120, aggregate = "max"),
         Book = colDef(align = 'left', width = 210, aggregate = "unique"),
-        Line = colDef(align = 'right', width = 90, format = colFormat(prefix = '+'), aggregate = "max"),
-        `Proj Line` = colDef(align = 'right', width = 120, cell = function(value) {add_plus(value)}, aggregate = "max"),
+        Line = colDef(align = 'right', width = 90, cell = add_plus_JS(), aggregated = add_plus_JS(), aggregate = "max"),
+        `Proj Line` = colDef(align = 'right', width = 120, cell = add_plus_JS(), aggregated = add_plus_JS(), aggregate = "max"),
         Edge = colDef(align = 'right', width = 75, format = colFormat(percent = TRUE, digits = 2), aggregate = "max"),
         Units = colDef(align = 'right', width = 75, format = colFormat(suffix = 'u', digits = 2), aggregate = "max")
       ))
