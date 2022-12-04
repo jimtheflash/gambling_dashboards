@@ -1,0 +1,13 @@
+name: fpts
+title: fpts
+username:
+account: jimtheflash
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5543148
+bundleId: 6439479
+url: https://jimtheflash.shinyapps.io/fpts/
+when: 1666710489.22602
+lastSyncTime: 1666710489.22603
+asMultiple: FALSE
+asStatic: FALSE
