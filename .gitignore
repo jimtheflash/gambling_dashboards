@@ -41,3 +41,4 @@ vignettes/*.pdf
 # rsconnect stuff
 fpts/rsconnect/*
 ftts/rsconnect/*
+.Rproj.user

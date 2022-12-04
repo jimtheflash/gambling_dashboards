@@ -37,10 +37,10 @@ ui <- fluidPage(
 # server ------------------------------------------------------------------
 
 server <- function(input, output, session) {
-  
+
   # restart
   if (file.exists('restart.txt')) system('touch restart.txt') else file.create('restart.txt')
-  
+
   # when the update button is pushed grab the latest odds_fpts.csv from github
   fpts_by_team_raw <- eventReactive(input$updateButton, {
     read.csv("https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/odds_fpts_team.csv")
@@ -51,7 +51,7 @@ server <- function(input, output, session) {
     edges <- list()
     for (i in 1:nrow(fpts_by_team_raw())) {
       test_row <- fpts_by_team_raw() %>%
-        filter(row_number() == i) 
+        filter(row_number() == i)
       out_vec <- c()
       # if (!is.na(test_row$br_edge) & test_row$br_edge > 0) out_vec['br'] <- test_row$br_line
       # if (!is.na(test_row$bs_edge) & test_row$bs_edge > 0) out_vec['bs'] <- test_row$bs_line
@@ -67,13 +67,13 @@ server <- function(input, output, session) {
         edges[[i]] <- out_string
       }
     }
-    
+
     # return table with the edges and the nicely named columns
     fpts_by_team_raw() %>%
       mutate(Edges = unlist(edges)) %>%
       rowwise() %>%
       # NOTE: this suppressWarnings call is annoying but necessary
-      mutate(`Max Edge` = suppressWarnings(max(c_across(ends_with('edge')), na.rm = TRUE))) %>% 
+      mutate(`Max Edge` = suppressWarnings(max(c_across(ends_with('edge')), na.rm = TRUE))) %>%
       ungroup() %>%
       group_by(team, game_date) %>%
       fill(game, .direction =  'downup') %>%
@@ -105,9 +105,9 @@ server <- function(input, output, session) {
     paste0('FPTS By Team Data Last Updated at ', fpts_by_team_last_update(), ' UTC')
   )
   output$fpts_by_team_table <- renderReactable({
-    
+
     shiny::validate(need(nrow(fpts_by_team_tidy()) > 0, "waiting for input..."))
-    
+
     reactable(
       fpts_by_team_tidy(),
       rownames = FALSE,
