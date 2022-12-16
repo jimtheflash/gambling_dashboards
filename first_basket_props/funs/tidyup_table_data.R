@@ -1,4 +1,7 @@
-tidyup_table_data <- function(raw_data, bet_type, filters) {
+tidyup_table_data <- function(raw_data, bet_type, inputs, schedule) {
+
+  # make sure there are upcoming games
+  validate(need(nrow(raw_data) > 0 & any(!is.na(raw_data$game)), "waiting for input..."))
 
   # do some filtering as needed by bet_type
   if (bet_type == 'fpts_team') {
@@ -30,27 +33,27 @@ tidyup_table_data <- function(raw_data, bet_type, filters) {
            best_edge = max(edge),
            is_best_edge = if_else(edge == best_edge, TRUE, FALSE)) %>%
     ungroup() %>%
+    inner_join(schedule, by = 'team') %>%
     transmute(
       'Player' = player,
       'Team' = team,
-      'Date' = game_date,
+      'Date'  = as.Date(tipoff),
+      'Tipoff' = tipoff,
       'Game' = game,
       'Book' = book,
       'Line' = line,
       'Proj Line' = proj_line,
       'Edge' = edge,
-      'Units' = units,
+      'Wager' = units * inputs$unitsize,
       is_best_edge
     )
 
   # apply the filters
-  if ('best_edges' %in% filters) {
+  if (inputs$bestodds == TRUE) {
     tidy <- tidy %>% filter(is_best_edge == TRUE)
   }
 
-  if ('pos_edges' %in% filters) {
-    tidy <- tidy %>% filter(Edge > 0)
-  }
+  tidy <- tidy %>% filter(Edge > inputs$minedge)
 
   return(tidy)
 

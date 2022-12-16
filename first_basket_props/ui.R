@@ -1,65 +1,57 @@
-ui <- fluidPage(
-  h1('NBA First Basket Props!'),
-  br(),
-  fluidRow(
-    column(
-      width = 2,
-      actionButton('updateButton', h5('Update Data'))
-    )),
-  br(),
-  fluidRow(
-    column(
-      width = 3,
-      checkboxGroupInput('checkboxes', h5('Global Filters'),
-                         choices = list('Show only best edges?' = 'best_edges',
-                                        'Hide edges < 0%?' = 'pos_edges'),
-                         selected = 'best_edges')
-    )),
-  br(),
-  fluidRow(
-    column(
-      width = 12,
-      tabsetPanel(
-        tabPanel('First Player to Score',
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     em(textOutput('fpts_ts'))
-                   )
-                 ),
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     reactableOutput('fpts_table')))),
-        tabPanel('First Player to Score by Team',
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     em(textOutput('fpts_team_ts'))
-                   )
-                 ),
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     reactableOutput('fpts_team_table')))),
-        tabPanel('First Team to Score',
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     em(textOutput('ftts_ts'))
-                   )
-                 ),
-                 br(),
-                 fluidRow(
-                   column(
-                     width = 12,
-                     reactableOutput('ftts_table')))))
-      )
-    )
-  )
+ui <-
+  fluidPage(
+    titlePanel('NBA First Basket Props!'),
+    br(),
+    p(em('To update the data, clear your browser cache and refresh the page. Projections are updated a couple times an hour, and more frequently closer to tipoff.')),
+    br(),
+    fluidRow(column(width = 6,
+                    bsCollapse(
+                      bsCollapsePanel(
+                        title = 'Global Filters & Settings',
+                        fluidRow(column(width = 12, p(em('Adjustments made here apply to all of the tabs below.')))),
+                        fluidRow(column(width = 4, numericInput('unitsize', 'Unit Size ($)', value = 1, step = 1)),
+                                 column(width = 4, numericInput('minedge', 'Minimum Edge (%)', value = -1, min = -Inf, max = Inf))),
+                        # fluidRow(),
+                        fluidRow(column(width = 12, checkboxInput('bestodds', 'Only show books with best odds for each bet?', value = TRUE, width = "100%"))))))),
+    br(),
+    fluidRow(
+      column(
+        width = 12,
+        tabsetPanel(
+          tabPanel('First Player to Score',
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       em(textOutput('fpts_ts')))),
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       reactableOutput('fpts_table')))),
+          tabPanel('First Player to Score by Team',
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       em(textOutput('fpts_team_ts')))),
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       reactableOutput('fpts_team_table')))),
+          tabPanel('First Team to Score',
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       em(textOutput('ftts_ts')))),
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       reactableOutput('ftts_table')))),
+          tabPanel('Arb Opportunities')))))
+
+
 
