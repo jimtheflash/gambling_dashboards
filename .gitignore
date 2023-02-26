@@ -42,3 +42,6 @@ vignettes/*.pdf
 fpts/rsconnect/*
 ftts/rsconnect/*
 .Rproj.user
+
+# mac stuff
+.DS_Store

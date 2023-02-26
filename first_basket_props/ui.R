@@ -18,6 +18,7 @@ ui <-
       column(
         width = 12,
         tabsetPanel(
+# first player to score tab -----------------------------------------------
           tabPanel('First Player to Score',
                    br(),
                    fluidRow(
@@ -29,6 +30,19 @@ ui <-
                      column(
                        width = 12,
                        reactableOutput('fpts_table')))),
+# # first player to score by points by points tab ---------------------------
+# tabPanel('First Player to Score By Points',
+#          br(),
+#          fluidRow(
+#            column(
+#              width = 12,
+#              em(textOutput('fpts_ts')))),
+#          br(),
+#          fluidRow(
+#            column(
+#              width = 12,
+#              reactableOutput('fpts_table')))),
+# first player to score by team tab ---------------------------------------
           tabPanel('First Player to Score by Team',
                    br(),
                    fluidRow(
@@ -40,6 +54,7 @@ ui <-
                      column(
                        width = 12,
                        reactableOutput('fpts_team_table')))),
+# first team to score tab -------------------------------------------------
           tabPanel('First Team to Score',
                    br(),
                    fluidRow(
@@ -51,6 +66,8 @@ ui <-
                      column(
                        width = 12,
                        reactableOutput('ftts_table')))),
+
+# arb opportunities tab ---------------------------------------------------
           tabPanel('Arb Opportunities')))))
 
 

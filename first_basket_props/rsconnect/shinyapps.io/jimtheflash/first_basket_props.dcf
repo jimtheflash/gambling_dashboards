@@ -5,9 +5,9 @@ account: jimtheflash
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7810018
-bundleId: 6644668
+bundleId: 6649465
 url: https://jimtheflash.shinyapps.io/first_basket_props/
-when: 1671201250.1643
-lastSyncTime: 1671201250.16431
+when: 1671327580.31235
+lastSyncTime: 1671327580.31236
 asMultiple: FALSE
 asStatic: FALSE

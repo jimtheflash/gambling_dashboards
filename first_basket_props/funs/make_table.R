@@ -1,4 +1,4 @@
-
+# TODO: move the filters here so that they don't completely recreate the data
 make_table <- function(table_data, type = 'player') {
 
   if (type == 'player') {
