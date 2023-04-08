@@ -65,10 +65,4 @@ ui <-
                    fluidRow(
                      column(
                        width = 12,
-                       reactableOutput('ftts_table')))),
-
-# arb opportunities tab ---------------------------------------------------
-          tabPanel('Arb Opportunities')))))
-
-
-
+                       reactableOutput('ftts_table'))))))))
