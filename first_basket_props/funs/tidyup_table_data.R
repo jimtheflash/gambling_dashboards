@@ -94,7 +94,7 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
     return(output)
   }
   else if (bet_type %in% c('ftts_exact')) {
-browser()
+
   almost_output <- tidy %>%
     inner_join(schedule, by = c('team_abbreviation' = 'team'))
 

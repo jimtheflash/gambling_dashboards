@@ -19,7 +19,7 @@ ftts_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/
 ftts_exact_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_ftts_exact.csv"
 win_tip_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_win_tip.csv"
 
-date_string <- as.character(gsub('-', '', Sys.Date()))
+date_string <- as.character(gsub('-', '', today("America/Chicago")))
 schedule_path <- glue("https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/nba_schedules/{date_string}.csv")
 
 # data

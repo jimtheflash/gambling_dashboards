@@ -24,19 +24,6 @@ ui <-
         tabsetPanel(
 
 # first player to score tab -----------------------------------------------
-          tabPanel('Win Tipoff',
-                   br(),
-                   fluidRow(
-                     column(
-                       width = 12,
-                       em(textOutput('win_tip_ts')))),
-                   br(),
-                   fluidRow(
-                     column(
-                       width = 12,
-                       reactableOutput('win_tip_table')))),
-
-# first player to score tab -----------------------------------------------
           tabPanel('First Player to Score',
                    br(),
                    fluidRow(
@@ -84,7 +71,22 @@ ui <-
                    fluidRow(
                      column(
                        width = 12,
-                       reactableOutput('ftts_table'))))))))
+                       reactableOutput('ftts_table')))),
+
+# win tip -----------------------------------------------
+          tabPanel('Win Tipoff',
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       em(textOutput('win_tip_ts')))),
+                   br(),
+                   fluidRow(
+                     column(
+                       width = 12,
+                       reactableOutput('win_tip_table'))))))))
+
+
 # # first team to score exact tab -------------------------------------------------
 # tabPanel('First Team to Score Exact',
 #          br(),
