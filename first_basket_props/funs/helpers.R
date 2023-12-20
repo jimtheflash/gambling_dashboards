@@ -23,4 +23,9 @@ restart_app <- function() {
   }
 }
 
-
+read_csv_from_private_repo <- function(csv_path, pat) {
+  auth <- httr::authenticate(pat, "")
+  resp <- httr::GET(csv_path, auth)
+  txt <- httr::content(resp, "text")
+  readr::read_csv(txt, show_col_types = FALSE)
+}
