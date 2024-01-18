@@ -54,7 +54,7 @@ ui <-
                      column(
                        width = 12,
                        reactableOutput('fpts_team_table')))),
-# first player to score tab -----------------------------------------------
+# first player to score exact tab -----------------------------------------
           tabPanel('First Player to Score Exact',
                    br(),
                    fluidRow(
@@ -66,6 +66,19 @@ ui <-
                      column(
                        width = 12,
                        reactableOutput('fpts_exact_table')))),
+# first player to score by team exact tab ---------------------------------
+tabPanel('First Player to Score By Team Exact',
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             em(textOutput('fpts_team_exact_ts')))),
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             reactableOutput('fpts_team_exact_table')))),
+
 # first team to score tab -------------------------------------------------
           tabPanel('First Team to Score',
                    br(),

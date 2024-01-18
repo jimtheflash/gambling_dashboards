@@ -144,7 +144,7 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
     )
   return(output)
 }
-  else if (bet_type %in% c('fpts_exact')) {
+  else if (bet_type %in% c('fpts_exact', 'fpts_team_exact')) {
 
     almost_output <- tidy %>%
       inner_join(schedule, by = c('team_abbreviation' = 'team'))
