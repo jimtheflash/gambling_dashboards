@@ -161,9 +161,8 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
       mutate(fgm_line = value[book == 'line' & type == 'fgm'],
              fgm_prob = value[book == 'prob' & type == 'fgm'])
 
-
     output <- points_output %>%
-      left_join(fgm_output) %>%
+      full_join(fgm_output) %>%
       filter(!book %in% c('prob', 'line')) %>%
       group_by(player_name, team_abbreviation, book, tipoff, shot_type) %>%
       mutate(line = value[type == 'line'],

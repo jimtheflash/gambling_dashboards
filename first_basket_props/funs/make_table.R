@@ -74,7 +74,7 @@ make_table <- function(table_data, type = 'player', exact = FALSE, win_tip = FAL
         Tipoff = colDef(align = 'right', width = 105, aggregate = "max", format = colFormat(time = TRUE)),
         Game = colDef(align = 'left', width = 120, aggregate = "max"),
         `Shot Type` = colDef(align = 'left', width = 90, aggregate = "unique"),
-        Book = colDef(align = 'left', width = 200, aggregate = "unique"),
+        Book = colDef(align = 'left', width = 90, aggregate = "unique"),
         Line = colDef(align = 'right', width = 90, aggregate = "max"),
         Prob = colDef(align = 'right', width = 120, format = colFormat(percent = TRUE, digits = 2), aggregate = "max"),
         `Proj Line` = colDef(align = 'right', width = 90, aggregate = "max"),
