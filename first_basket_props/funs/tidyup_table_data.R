@@ -51,7 +51,6 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
     return(output)
   }
   else if (bet_type %in% c('fpts', 'fpts_team', 'ftts')) {
-
     if (bet_type == 'ftts') tidy$player_name <- 'Team'
 
     output <- tidy  %>%
@@ -92,6 +91,46 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
         is_max_edge
       )
     return(output)
+  }
+  else if (bet_type %in% c('first_three', 'first_three_team')) {
+
+    output <- tidy  %>%
+      inner_join(schedule, by = c('team_abbreviation' = 'team')) %>%
+      group_by(player_name, team_abbreviation, game, tipoff) %>%
+      mutate(fgm_line = value[book == 'line' & type == 'fg3m'],
+             fgm_prob = value[book == 'prob' & type == 'fg3m']) %>%
+      ungroup() %>%
+      filter(!book %in% c('prob', 'line')) %>%
+      group_by(player_name, team_abbreviation, book, tipoff) %>%
+      mutate(line = value[type == 'line'],
+             prob = value[type == 'prob'],
+             units = value[type == 'units'],
+             edge = value[type == 'edge']) %>%
+      ungroup() %>%
+      filter(type %in% c('line', 'prob', 'units')) %>%
+      group_by(player_name, team_abbreviation, game, tipoff) %>%
+      mutate(max_edge = max(edge, na.rm=TRUE),
+             is_max_edge = if_else(edge == max_edge, 1, 0)) %>%
+      ungroup() %>%
+      select(-type, -value) %>%
+      distinct() %>%
+      transmute(
+        Player = player_name,
+        Team = team_abbreviation,
+        Date = game_date,
+        Tipoff = tipoff,
+        Game = game,
+        Book = book,
+        Line = line,
+        Prob = prob,
+        `Proj Line` = fgm_line,
+        `Proj Prob` = fgm_prob,
+        Edge = edge,
+        Units = units,
+        is_max_edge
+      )
+    return(output)
+
   }
   else if (bet_type %in% c('ftts_exact')) {
 

@@ -19,6 +19,9 @@ fpts_exact_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff
 fpts_team_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_fpts_team.csv"
 fpts_team_exact_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_fpts_team_exact.csv"
 
+first_three_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_first_three.csv"
+first_three_team_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_first_three_team.csv"
+
 ftts_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_ftts.csv"
 ftts_exact_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_ftts_exact.csv"
 win_tip_path <- "https://raw.githubusercontent.com/jimtheflash/gambling_stuff/main/data/02_curated/nba_first_to_score/edges/edges_win_tip.csv"
@@ -36,5 +39,7 @@ fpts_team <- reactiveValues(data = read_csv_from_private_repo(fpts_team_path, gh
 fpts_team_exact <- reactiveValues(data = read_csv_from_private_repo(fpts_team_exact_path, gh_pat))
 ftts <- reactiveValues(data = read_csv_from_private_repo(ftts_path, gh_pat))
 ftts_exact <- reactiveValues(data = read_csv_from_private_repo(ftts_exact_path, gh_pat))
+first_three <- reactiveValues(data = read_csv_from_private_repo(first_three_path, gh_pat))
+first_three_team <- reactiveValues(data = read_csv_from_private_repo(first_three_team_path, gh_pat))
 win_tip <- reactiveValues(data = read_csv_from_private_repo(win_tip_path, gh_pat))
 schedule <- reactiveValues(data = read_csv_from_private_repo(schedule_path, gh_pat))

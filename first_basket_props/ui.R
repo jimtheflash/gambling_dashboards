@@ -79,6 +79,31 @@ tabPanel('First Player to Score By Team Exact',
              width = 12,
              reactableOutput('fpts_team_exact_table')))),
 
+# first three tab -----------------------------------------------
+tabPanel('First Three',
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             em(textOutput('first_three_ts')))),
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             reactableOutput('first_three_table')))),
+
+# first three by team tab ---------------------------------------
+tabPanel('First Three by Team',
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             em(textOutput('first_three_team_ts')))),
+         br(),
+         fluidRow(
+           column(
+             width = 12,
+             reactableOutput('first_three_team_table')))),
 # first team to score tab -------------------------------------------------
           tabPanel('First Team to Score',
                    br(),
@@ -92,6 +117,8 @@ tabPanel('First Player to Score By Team Exact',
                        width = 12,
                        reactableOutput('ftts_table')))),
 
+# first team to score exact tab -------------------------
+tabPanel('First Team to Score Exact'),
 # win tip -----------------------------------------------
           tabPanel('Win Tipoff',
                    br(),
@@ -104,17 +131,3 @@ tabPanel('First Player to Score By Team Exact',
                      column(
                        width = 12,
                        reactableOutput('win_tip_table'))))))))
-
-
-# # first team to score exact tab -------------------------------------------------
-# tabPanel('First Team to Score Exact',
-#          br(),
-#          fluidRow(
-#            column(
-#              width = 12,
-#              em(textOutput('ftts_exact_ts')))),
-#          br(),
-#          fluidRow(
-#            column(
-#              width = 12,
-#              reactableOutput('ftts_exact_table'))))
