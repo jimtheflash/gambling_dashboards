@@ -26,7 +26,7 @@ server <- function(input, output, session) {
   first_three_tidy <- reactive({tidyup_table_data(first_three$data, 'first_three', schedule = schedule_tidy())})
   first_three_team_tidy <- reactive({tidyup_table_data(first_three_team$data, 'first_three_team', schedule = schedule_tidy())})
   ftts_tidy <- reactive({tidyup_table_data(ftts$data, 'ftts', schedule = schedule_tidy())})
-  ftts_exact_tidy <- reactive({tidyup_table_data(fpts_exact$data, 'ftts_exact', schedule = schedule_tidy())})
+  ftts_exact_tidy <- reactive({tidyup_table_data(ftts_exact$data, 'ftts_exact', schedule = schedule_tidy())})
   win_tip_tidy <- reactive({tidyup_table_data(win_tip$data, 'win_tip', schedule = schedule_tidy())})
 
   # output tables
