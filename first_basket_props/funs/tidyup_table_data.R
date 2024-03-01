@@ -154,7 +154,7 @@ tidyup_table_data <- function(raw_data, bet_type, schedule) {
     output <- points_output %>%
       full_join(fgm_output) %>%
       filter(!book %in% c('prob', 'line')) %>%
-      group_by(shot_team, team_abbreviation, book, tipoff, shot_type) %>%
+      group_by(shot_team, team_abbreviation, book, game, tipoff, shot_type) %>%
       mutate(line = value[type == 'line'],
              prob = value[type == 'prob'],
              units = value[type == 'units'],

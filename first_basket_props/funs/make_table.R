@@ -129,7 +129,6 @@ make_table <- function(table_data, type = 'player', exact = FALSE, win_tip = FAL
       filterable = TRUE,
       sortable = TRUE,
       defaultSorted = list(Edge = 'desc'),
-      groupBy = c("Team"),
       columns = list(
         Team = colDef(align = 'left', width = 200, aggregate = "max"),
         Date = colDef(align = 'right', width = 105, aggregate = "max", format = colFormat(date = TRUE)),
