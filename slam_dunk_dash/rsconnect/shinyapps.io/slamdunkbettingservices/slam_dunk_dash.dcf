@@ -5,7 +5,7 @@ account: slamdunkbettingservices
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11885527
-bundleId: 8552374
+bundleId: 8552410
 url: https://slamdunkbettingservices.shinyapps.io/slam_dunk_dash/
 version: 1
 asMultiple: FALSE
