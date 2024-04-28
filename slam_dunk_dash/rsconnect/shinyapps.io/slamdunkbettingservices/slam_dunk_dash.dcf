@@ -1,0 +1,12 @@
+name: slam_dunk_dash
+title: slam_dunk_dash
+username: slamdunkbettingservices
+account: slamdunkbettingservices
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11885527
+bundleId: 8552374
+url: https://slamdunkbettingservices.shinyapps.io/slam_dunk_dash/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
