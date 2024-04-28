@@ -7,7 +7,7 @@ suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(reactable))
 
 # funs
-for (f in list.files('sfuns/')) {
+for (f in list.files('funs/')) {
   source(paste0('funs/', f))
 }
 
